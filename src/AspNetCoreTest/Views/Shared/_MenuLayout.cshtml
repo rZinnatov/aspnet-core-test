@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section Styles
+{
+    @RenderSection("Styles", required: false)
+}
+@section Scripts
+{
+    @RenderSection("Scripts", required: false)
+}
+
+<div id="atqb-menu-layout">
+    <div id="atqb-menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="/">ATQB</a>
+            <ul class="pure-menu-list">
+            </ul>
+        </div>
+        @Component.Invoke("AuthInfo")
+    </div>
+    <div id="atqb-menu-layout-container">
+        <div id="atqb-menu-layout-content">
+            @RenderBody()
+        </div>
+    </div>
+</div>

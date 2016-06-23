@@ -1,0 +1,7 @@
+@import url("../../styles/variables.css");
+@import url("../../styles/colors.css");
+
+.tooltipTrigger {
+  color: var(--component-color, #067afb);
+  cursor: pointer;
+}

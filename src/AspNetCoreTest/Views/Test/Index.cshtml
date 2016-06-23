@@ -1,0 +1,170 @@
+﻿@model ATQB.WebApp.Models.Test
+@{
+    Layout = "_Layout";
+}
+
+@*Name: @(Model.Name) <br/>
+Result: @(Model.Result) <br />
+Message: @(Model.Message) <br />
+Number of nested tests: @(Model.NestedTests.Count()) <br />*@
+
+@section Scripts
+{
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        var processingRules = {
+            New: 0,
+            Never: 1,
+            Existing: 2
+        };
+
+        var qbCustomers = {};
+
+        $(function () {
+            console.log('ready');
+
+            //var data = {
+            //    startDate: '2016-03-01',
+            //    endDate: '2016-03-04',
+            //    userIds: [ 7, 1 ],
+            //    customers: [{
+            //        id: 4,
+            //        projectIds: [ 6, 7 ]
+            //    }, {
+            //        id: 2,
+            //        projectIds: [3]
+            //    }, {
+            //        id: 5,
+            //        projectIds: [9, 11]
+            //    }],
+            //    approvedTime: 'Both'
+            //};
+            var data = {
+                startDate: '2016-05-02',
+                endDate: '2016-05-02',
+                userIds: [ 1 ],
+                customers: [{
+                    id: 3,
+                    projectIds: [ 5, 4 ]
+                }, {
+                    id: 2,
+                    projectIds: [3]
+                }, {
+                    id: 5,
+                    projectIds: [9, 11]
+                }],
+                approvedTime: 'Both'
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/Import/Diff',
+                data: JSON.stringify(data),
+                contentType: 'application/json;charset=utf8',
+                success: function (response) {
+                    console.log(response);
+                    console.log(JSON.stringify(response));
+                }
+            });
+        });
+
+        function ImportProjectsToCustomers() {
+            var projects = [
+                { Id: 2, Name: 'Project2' },
+                { Id: 3, Name: 'Project3' },
+                { Id: 5, Name: 'Project5' }
+            ];
+            var data = {
+                ImportId: 5,
+                Items: [
+                    { atEntity: projects[0], processingRule: processingRules.New, qbEntity: { Id: '', ParentId: null } },
+                    { atEntity: projects[1], processingRule: processingRules.Never, qbEntity: { Id: '', ParentId: null } },
+                    { atEntity: projects[2], processingRule: processingRules.Existing, qbEntity: { Id: customers[0].Id, ParentId: null } }
+                ]
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/Import/Tasks',
+                data: JSON.stringify(data),
+                contentType: 'application/json;charset=utf8',
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+        function ImportFullMapProjectsToCustomers() {
+            // Data from BackEnd
+            var atCustomers = [{
+                Id: 2,
+                Name: 'Customer22',
+                Projects: [{ Id: 3, Name: 'Project11' }, { Id: 5, Name: 'Project12' }]
+            }, {
+                Id: 3,
+                Name: 'Customer3',
+                Projects: [{ Id: 4, Name: 'Project21' }, { Id: 6, Name: 'Project22' }, { Id: 7, Name: 'Project23' }]
+            }, {
+                Id: 5,
+                Name: 'Customer5',
+                Projects: [{ Id: 10, Name: 'Project51' }, { Id: 12, Name: 'Project52' }, { Id: 17, Name: 'Project53' }]
+            }];
+
+            // Data to BackEnd
+            var tasks = [
+                {
+                    AtEntity: { Id: atCustomers[0].Id, Name: atCustomers[0].Name },
+                    ProcessingRule: processingRules.New,
+                    QbEntity: { Id: '', ParentId: null },
+                    Items: [{
+                        AtEntity: { Id: atCustomers[0].Id, Name: atCustomers[0].Name },
+                        ProcessingRule: processingRules.New,
+                        QbEntity: { Id: '', ParentId: null }
+                    },{
+                        AtEntity: { Id: atCustomers[0].Id, Name: atCustomers[0].Name },
+                        ProcessingRule: processingRules.Existing,
+                        QbEntity: { Id: '', ParentId: null }
+                    }]
+                }
+            ];
+
+            var tasks = [];
+            for (var atCustomerIndex in atCustomers)
+            {
+                var atCustomer = atCustomers[atCustomerIndex];
+
+                var projects = [];
+                for (var projectIndex in atCustomer.Projects)
+                {
+                    var project = atCustomer.Projects[projectIndex];
+                    projects.push({
+                        AtEntity: { Id: project.Id, Name: project.Name },
+                        ProcessingRule: processingRules.New,
+                        QbEntity: { Id: '', ParentId: null }
+                    });
+                }
+
+                tasks.push({
+                    AtEntity: { Id: atCustomer.Id, Name: atCustomer.Name },
+                    ProcessingRule: processingRules.New,
+                    QbEntity: { Id: '', ParentId: null },
+                    Items: projects
+                })
+            }
+
+            console.log(tasks);
+
+            var data = {
+                ImportId: 5,
+                Items: tasks
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/Import/TasksFullMap',
+                data: JSON.stringify(data),
+                contentType: 'application/json;charset=utf8',
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,35 @@
+@import url("./variables.css");
+@import url("./colors.css");
+
+.primaryButton {
+  border: 1px solid #bfbfbf;
+  border-radius: 5px;
+  background-color: var(--primary-background-color);
+  box-shadow: 0 3px 0 0 #e6e6e6;
+  color: var(--component-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  border: 1px solid #067afb;
+  background-color: #067afb;
+  color: white;
+}
+
+.primaryButton:active {
+  box-shadow: none;
+  transform: translateY(3px);
+}
+
+.primaryButton:focus {
+  outline: 0;
+}
+
+.primaryButton:disabled {
+  background-color: #bfbfbf;
+  color: #5c5c5c;
+  transform: translateY(3px);
+  box-shadow: none;
+  border-color: #bfbfbf;
+}
