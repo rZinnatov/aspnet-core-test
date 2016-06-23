@@ -1,18 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 
-namespace ATQB.WebApp
+namespace AspNetCoreTest
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseContentRoot(currentDirectory)
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 

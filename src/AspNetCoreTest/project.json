@@ -4,11 +4,8 @@
       "version": "1.0.0-rc2-3002702",
       "type": "platform"
     },
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1-rc2-24027",
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0-rc2-final",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0-rc2-final",
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Session": "1.0.0-rc2-final",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-rc2-final",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-rc2-final",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-rc2-final",
@@ -16,15 +13,7 @@
     "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final",
     "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Options": "1.0.0-rc2-final",
-
-    "ATQB.DAL": "1.0.0-*",
-    "AutoMapper": "4.2.1",
-    "Serilog.Sinks.Literate": "1.2.0",
-    "Serilog.Extensions.Logging": "1.0.0-rc1-*",
-    "Serilog.Sinks.RollingFile": "2.0.0-beta-700",
-    "IppDotNetSdkForQuickBooksApiV3": "2.4.0"
+    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-final"
   },
 
   "tools": {
@@ -37,7 +26,6 @@
   "frameworks": {
     "netcoreapp1.0": {
       "imports": [
-        "net45",
         "dotnet5.6",
         "dnxcore50",
         "portable-net45+win8"
@@ -47,15 +35,11 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true,
-    "compile": {
-      "exclude": [ "wwwroot", "node_modules" ]
-    }
+    "preserveCompilationContext": true
   },
 
   "runtimeOptions": {
-    "gcServer": true,
-    "gcConcurrent": true
+    "gcServer": true
   },
 
   "publishOptions": {
